@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Water Conservation Guidelines - GERD Water Intelligence Platform</title>
@@ -15,7 +17,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Cairo', sans-serif;
             background: 
                 radial-gradient(circle at 20% 30%, rgba(245, 158, 11, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 80% 70%, rgba(251, 191, 36, 0.15) 0%, transparent 40%),
@@ -241,7 +243,282 @@
             border-color: rgba(245, 158, 11, 0.5);
             background: rgba(245, 158, 11, 0.2);
         }
+        
+        /* ستايلات الأقسام الإرشادية */
+.guidelines-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 3rem;
+    margin: 4rem 0;
+}
 
+.guideline-section {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(25px);
+    border-radius: 24px;
+    padding: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.guideline-section:hover {
+    transform: translateY(-5px);
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.guideline-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #22c55e, #16a34a, #15803d);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.95);
+}
+
+.section-subtitle {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.guideline-list {
+    list-style: none;
+}
+
+.guideline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.guideline-item:hover {
+    background: rgba(34, 197, 94, 0.05);
+    border-color: rgba(34, 197, 94, 0.2);
+}
+
+.guideline-icon {
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+    background: rgba(34, 197, 94, 0.2);
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.guideline-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: #22c55e;
+}
+
+.guideline-content h4 {
+    color: rgba(255,255,255,0.95);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.guideline-content p {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.savings-indicator {
+    display: inline-block;
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+/* ستايلات حاسبة توفير المياه */
+.calculator-section {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(25px);
+    border-radius: 24px;
+    padding: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    margin: 4rem 0;
+    position: relative;
+}
+
+.calculator-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #06b6d4, #0891b2, #0e7490);
+}
+
+.calculator-title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #e0f2fe, #06b6d4);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 2rem;
+}
+
+.calculator-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.input-group {
+    margin-bottom: 2rem;
+}
+
+.input-label {
+    display: block;
+    color: rgba(255,255,255,0.9);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.input-field {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: rgba(6, 182, 212, 0.5);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.calculate-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: rgba(6, 182, 212, 0.2);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: 12px;
+    color: #06b6d4;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.calculate-btn:hover {
+    background: rgba(6, 182, 212, 0.3);
+    border-color: rgba(6, 182, 212, 0.5);
+    transform: translateY(-2px);
+}
+
+.results-panel {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+}
+
+.result-value {
+    color: rgba(255,255,255,0.95);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.result-value.savings {
+    color: #22c55e;
+}
+
+/* أنيميشن Pulse */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.02);
+        opacity: 0.95;
+    }
+}
+
+/* Responsive للأقسام الجديدة */
+@media (max-width: 1024px) {
+    .guidelines-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .calculator-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .guideline-section {
+        padding: 1.5rem;
+    }
+    
+    .calculator-section {
+        padding: 2rem 1rem;
+    }
+}
         .container {
             max-width: 1800px;
             margin: 0 auto;
@@ -273,65 +550,20 @@
             line-height: 1.6;
         }
 
-        .stats-banner {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-            padding: 2rem;
-            background: rgba(22, 163, 74, 0.1);
-            border-radius: 20px;
-            border: 1px solid rgba(22, 163, 74, 0.3);
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: rgba(255,255,255,0.8);
-            font-weight: 500;
-        }
-
-        .guidelines-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 3rem;
-            margin: 4rem 0;
-        }
-
-        .guideline-section {
+        /* محلل فواتير المياه الذكي - النسخة المحدثة */
+        .bills-analyzer-section {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(25px);
             border-radius: 24px;
-            padding: 2.5rem;
+            padding: 3rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            margin: 4rem 0;
             position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
+            direction: rtl;
         }
 
-        .guideline-section:hover {
-            transform: translateY(-5px);
-            border-color: rgba(34, 197, 94, 0.3);
-        }
-
-        .guideline-section::before {
+        .bills-analyzer-section::before {
             content: '';
             position: absolute;
             top: 0;
@@ -341,11 +573,344 @@
             background: linear-gradient(90deg, #22c55e, #16a34a, #15803d);
         }
 
-        .section-header {
+        /* تنبيه الوضع التجريبي */
+        .demo-notice {
+            background: rgba(245, 158, 11, 0.1);
+            border: 2px solid rgba(245, 158, 11, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .demo-notice-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            background: rgba(245, 158, 11, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .demo-notice-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #f59e0b;
+        }
+
+        .demo-notice-content h3 {
+            color: #f59e0b;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .demo-notice-content p {
+            color: rgba(255,255,255,0.85);
+            line-height: 1.8;
+            margin-bottom: 0.75rem;
+        }
+
+        .demo-notice-content ul {
+            list-style: none;
+            margin-top: 1rem;
+            padding-right: 1.5rem;
+        }
+
+        .demo-notice-content ul li {
+            color: rgba(255,255,255,0.75);
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        .demo-notice-content ul li::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0.6rem;
+            width: 6px;
+            height: 6px;
+            background: #f59e0b;
+            border-radius: 50%;
+        }
+
+        /* قسم طرق الاستخدام */
+        .usage-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .method-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .method-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(34, 197, 94, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .method-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .method-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(34, 197, 94, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .method-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #22c55e;
+        }
+
+        .method-icon.disabled {
+            background: rgba(100, 116, 139, 0.2);
+            opacity: 0.6;
+        }
+
+        .method-icon.disabled svg {
+            fill: #64748b;
+        }
+
+        .method-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.95);
+        }
+
+        .method-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .status-active {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .status-coming-soon {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .method-description {
+            color: rgba(255,255,255,0.75);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        /* نموذج تسجيل الدخول التجريبي */
+        .demo-login-form {
+            background: rgba(100, 116, 139, 0.1);
+            border: 1px dashed rgba(100, 116, 139, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .demo-login-form.disabled {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(34, 197, 94, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .demo-hint {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .demo-hint svg {
+            width: 16px;
+            height: 16px;
+            fill: #06b6d4;
+            flex-shrink: 0;
+        }
+
+        .demo-connect-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(100, 116, 139, 0.3);
+            border: 1px solid rgba(100, 116, 139, 0.4);
+            border-radius: 12px;
+            color: rgba(255,255,255,0.6);
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: not-allowed;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .demo-connect-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* قسم رفع الفواتير الورقية */
+        .upload-section {
+            margin-top: 1.5rem;
+        }
+
+        .upload-area {
+            border: 2px dashed rgba(34, 197, 94, 0.4);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(34, 197, 94, 0.05);
+            margin: 1.5rem 0;
+        }
+
+        .upload-area:hover {
+            border-color: rgba(34, 197, 94, 0.6);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .upload-area.drag-over {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.15);
+        }
+
+        .upload-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(34, 197, 94, 0.1);
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .upload-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: #22c55e;
+        }
+
+        .upload-text p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .upload-link {
+            color: #22c55e;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .upload-text small {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        .section-header-arabic {
             display: flex;
             align-items: center;
             gap: 1rem;
             margin-bottom: 2rem;
+            direction: rtl;
+        }
+
+        .section-title-arabic {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.95);
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .section-subtitle-arabic {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .subsection-title-arabic {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 1.5rem;
+            font-family: 'Cairo', sans-serif;
         }
 
         .section-icon {
@@ -363,420 +928,447 @@
             fill: #22c55e;
         }
 
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: rgba(255,255,255,0.95);
-        }
-
-        .section-subtitle {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
-            margin-top: 0.25rem;
-        }
-
-        .guideline-list {
-            list-style: none;
-        }
-
-        .guideline-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .guideline-item:hover {
-            background: rgba(34, 197, 94, 0.05);
-            border-color: rgba(34, 197, 94, 0.2);
-        }
-
-        .guideline-icon {
-            width: 24px;
-            height: 24px;
-            padding: 4px;
-            background: rgba(34, 197, 94, 0.2);
-            border-radius: 6px;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .guideline-icon svg {
-            width: 16px;
-            height: 16px;
-            fill: #22c55e;
-        }
-
-        .guideline-content h4 {
-            color: rgba(255,255,255,0.95);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .guideline-content p {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .savings-indicator {
-            display: inline-block;
-            background: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-top: 0.5rem;
-            border: 1px solid rgba(34, 197, 94, 0.3);
-        }
-
-        .calculator-section {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(25px);
-            border-radius: 24px;
-            padding: 3rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-            margin: 4rem 0;
-            position: relative;
-        }
-
-        .calculator-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #06b6d4, #0891b2, #0e7490);
-        }
-
-        .calculator-title {
-            text-align: center;
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, #e0f2fe, #06b6d4);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 2rem;
-        }
-
-        .calculator-grid {
+        .bills-analysis-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
-            align-items: start;
+            margin-bottom: 3rem;
         }
 
-        .input-group {
-            margin-bottom: 2rem;
+        .bill-upload-section, .analysis-results-section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .input-label {
-            display: block;
+        .uploaded-bills {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .bill-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bill-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .bill-info {
+            flex: 1;
+            direction: rtl;
+        }
+
+        .bill-name {
             color: rgba(255,255,255,0.9);
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
-        .input-field {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: white;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+        .bill-size {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
         }
 
-        .input-field:focus {
-            outline: none;
-            border-color: rgba(6, 182, 212, 0.5);
-            background: rgba(255, 255, 255, 0.15);
+        .bill-remove {
+            color: #ef4444;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background 0.3s ease;
         }
 
-        .calculate-btn {
+        .bill-remove:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .analyze-btn {
             width: 100%;
             padding: 1rem 2rem;
-            background: rgba(6, 182, 212, 0.2);
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.3);
             border-radius: 12px;
-            color: #06b6d4;
+            color: #22c55e;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-family: 'Cairo', sans-serif;
+            border: none;
         }
 
-        .calculate-btn:hover {
-            background: rgba(6, 182, 212, 0.3);
-            border-color: rgba(6, 182, 212, 0.5);
+        .analyze-btn:hover:not(:disabled) {
+            background: rgba(34, 197, 94, 0.3);
+            border-color: rgba(34, 197, 94, 0.5);
             transform: translateY(-2px);
         }
 
-        .results-panel {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .analyze-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        .result-item {
+        .analyze-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .analysis-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-header h4 {
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .usage-chart-container {
+            height: 200px;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .usage-summary {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+
+        .summary-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
+            padding: 0.5rem 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            direction: rtl;
         }
 
-        .result-item:last-child {
+        .summary-item:last-child {
             border-bottom: none;
         }
 
-        .result-label {
-            color: rgba(255,255,255,0.8);
-            font-weight: 500;
+        .summary-item .label {
+            color: rgba(255,255,255,0.7);
+            font-family: 'Cairo', sans-serif;
         }
 
-        .result-value {
-            color: rgba(255,255,255,0.95);
-            font-weight: 700;
-            font-size: 1.1rem;
+        .summary-item .value {
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
         }
 
-        .result-value.savings {
-            color: #22c55e;
+        .leak-alerts {
+            direction: rtl;
         }
 
-        .tips-section {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(25px);
-            border-radius: 24px;
-            padding: 3rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-            margin: 4rem 0;
-            position: relative;
-        }
-
-        .tips-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #f59e0b, #fbbf24, #f97316);
-        }
-
-        .tips-title {
+        .alert-placeholder {
+            color: rgba(255,255,255,0.6);
             text-align: center;
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, #fef3c7, #f59e0b);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 2rem;
+            padding: 2rem;
+            font-style: italic;
+            font-family: 'Cairo', sans-serif;
         }
 
-        .smart-tips-grid {
+        /* نظام النقاط والمكافآت */
+        .rewards-system {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            direction: rtl;
+        }
+
+        .rewards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
+            margin-top: 2rem;
         }
 
-        .smart-tip {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .smart-tip:hover {
-            transform: translateY(-3px);
-            border-color: rgba(245, 158, 11, 0.3);
-        }
-
-        .smart-tip::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(180deg, #f59e0b, #fbbf24);
-        }
-
-        .tip-icon {
-            width: 32px;
-            height: 32px;
-            padding: 8px;
-            background: rgba(245, 158, 11, 0.2);
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .tip-icon svg {
-            width: 16px;
-            height: 16px;
-            fill: #f59e0b;
-        }
-
-        .tip-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: rgba(255,255,255,0.95);
-            margin-bottom: 1rem;
-        }
-
-        .tip-description {
-            color: rgba(255,255,255,0.7);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .impact-badge {
-            display: inline-block;
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-
-        .data-driven-section {
+        .points-card, .achievements-card, .rewards-card {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(25px);
-            border-radius: 24px;
-            padding: 3rem;
+            border-radius: 12px;
+            padding: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-            margin: 4rem 0;
-            position: relative;
         }
 
-        .data-driven-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #8b5cf6, #a855f7, #9333ea);
-        }
-
-        .chart-container {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            margin: 2rem 0;
-        }
-
-        .chart-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: rgba(255,255,255,0.95);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .alert-section {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 16px;
-            padding: 2rem;
-            margin: 2rem 0;
+        .points-header {
             display: flex;
             align-items: center;
             gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        .alert-icon {
+        .points-icon {
+            width: 48px;
+            height: 48px;
+            padding: 12px;
+            background: rgba(245, 158, 11, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .points-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #f59e0b;
+        }
+
+        .points-card h4, .achievements-card h4, .rewards-card h4 {
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .points-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #f59e0b;
+            margin-top: 0.5rem;
+        }
+
+        .points-breakdown {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .point-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .point-item span:first-child {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .point-item span:last-child {
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        .achievements-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .achievement {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .achievement.unlocked {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .achievement.locked {
+            opacity: 0.6;
+        }
+
+        .achievement-icon {
             width: 32px;
             height: 32px;
-            fill: #ef4444;
-            flex-shrink: 0;
+            border-radius: 50%;
+            background: rgba(245, 158, 11, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: grayscale(1);
         }
 
-        .alert-content h3 {
-            color: #ef4444;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+        .achievement.unlocked .achievement-icon {
+            filter: none;
+            background: rgba(34, 197, 94, 0.2);
         }
 
-        .alert-content p {
-            color: rgba(255,255,255,0.8);
-            line-height: 1.5;
+        .achievement-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #f59e0b;
         }
 
-        .footer-stats {
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .achievement.unlocked .achievement-icon svg {
+            fill: #22c55e;
         }
 
-        .footer-stats h3 {
+        .achievement-info h5 {
             color: rgba(255,255,255,0.9);
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            font-family: 'Cairo', sans-serif;
         }
 
-        .footer-stats p {
-            color: rgba(255,255,255,0.7);
+        .achievement-info p {
+            color: rgba(255,255,255,0.6);
             font-size: 0.9rem;
-            line-height: 1.6;
+            font-family: 'Cairo', sans-serif;
         }
 
-        /* Mobile Responsive */
+        .rewards-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .reward-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .reward-info h5 {
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .reward-info p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .redeem-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 8px;
+            color: #22c55e;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .redeem-btn:hover:not(:disabled) {
+            background: rgba(34, 197, 94, 0.3);
+            border-color: rgba(34, 197, 94, 0.5);
+        }
+
+        .redeem-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* إشعارات */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(34, 197, 94, 0.9);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            z-index: 10000;
+            transform: translateX(-400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: rgba(239, 68, 68, 0.9);
+        }
+
+        .notification.warning {
+            background: rgba(245, 158, 11, 0.9);
+        }
+
+        /* التحميل */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
         @media (max-width: 1024px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .guidelines-grid {
+            .usage-methods {
                 grid-template-columns: 1fr;
             }
             
-            .calculator-grid {
+            .bills-analysis-grid {
                 grid-template-columns: 1fr;
             }
             
-            .stats-banner {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .smart-tips-grid {
+            .rewards-grid {
                 grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 768px) {
-            .stats-banner {
-                grid-template-columns: 1fr;
-            }
-            
             .hero-title {
                 font-size: 2rem;
+            }
+            
+            .bills-analyzer-section {
+                padding: 2rem 1rem;
+            }
+            
+            .upload-area {
+                padding: 2rem 1rem;
             }
         }
     </style>
@@ -802,11 +1394,11 @@
                     </div>
                 </div>
             </div>
-        <nav class="nav-buttons">
+         <nav class="nav-buttons">
          <a href="gerd_with_botpress_sidebar.html" class="nav-btn dashboard">Dashboard</a>
          <a href="resources_page.html" class="nav-btn resources">Resources</a>
          <a href="index.html" class="nav-btn timelapse">Timelapse</a>
-         <a href="gerd_solutions_center.html" class="nav-btn solutions">risk assessment</a>
+         <a href="gerd_solutions_center.html" class="nav-btn solutions">Solutions Center</a>
          <a href="realtime_monitoring.html" class="nav-btn real-time">Real-Time</a>
          <a href="water_conservation_guide.html" class="nav-btn conservation">Guidelines</a>
          </nav>
@@ -816,362 +1408,765 @@
     <div class="container">
         <!-- Hero Section -->
         <section class="hero-section">
-            <h1 class="hero-title">Smart Water Conservation</h1>
+            <h1 class="hero-title">توفير المياه الذكي</h1>
             <p class="hero-subtitle">
-                Data-driven water conservation strategies based on real-time GERD monitoring and Nile River analysis. 
-                Our intelligent recommendations help you reduce water consumption while maintaining quality of life.
+                استراتيجيات توفير المياه المبنية على البيانات الحقيقية من مراقبة سد النهضة ونهر النيل. 
+                توصياتنا الذكية تساعدك على تقليل استهلاك المياه مع الحفاظ على جودة الحياة.
             </p>
         </section>
+         
+        <!-- محلل فواتير المياه الذكي -->
+        <section class="bills-analyzer-section">
+            <div class="section-header-arabic">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14,2 14,8 20,8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="section-title-arabic">محلل فواتير المياه الذكي</div>
+                    <div class="section-subtitle-arabic">تحليل دقيق لاستهلاكك مع نظام المكافآت والحوافز</div>
+                </div>
+            </div>
 
-        <!-- Statistics Banner -->
-        <section class="stats-banner" id="statsBanner">
-            <div class="stat-item">
-                <div class="stat-number" id="currentWaterLevel">635m</div>
-                <div class="stat-label">Current GERD Level</div>
+            <!-- تنبيه الوضع التجريبي -->
+            <div class="demo-notice">
+                <div class="demo-notice-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div class="demo-notice-content">
+                    <h3>الأداة في وضع التجربة</h3>
+                    <p><strong>ملاحظة هامة:</strong> حتى الآن لم يتم ربط النظام ببيانات الشركة القابضة لمياه الشرب والصرف الصحي بشكل مباشر.</p>
+                    <p>هذا التكامل يتطلب:</p>
+                    <ul>
+                        <li>موافقات قانونية رسمية من الجهات المعنية</li>
+                        <li>ترتيبات أمنية متقدمة لحماية بيانات المستخدمين</li>
+                        <li>اتفاقيات تبادل بيانات مع الشركة القابضة</li>
+                        <li>اعتماد من الهيئة القومية لتنظيم الاتصالات</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>حالياً:</strong> يمكنك استخدام النظام من خلال رفع صور الفواتير الورقية للتحليل والحصول على التوصيات والمكافآت.</p>
+                </div>
             </div>
-            <div class="stat-item">
-                <div class="stat-number" id="potentialSavings">30%</div>
-                <div class="stat-label">Potential Water Savings</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="activeUsers">2.4K</div>
-                <div class="stat-label">Users Conserving Water</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="totalSaved">145M</div>
-                <div class="stat-label">Liters Saved This Month</div>
-            </div>
-        </section>
 
-        <!-- Alert Section Based on Real-Time Data -->
-        <div class="alert-section" id="conservationAlert" style="display: none;">
-            <svg class="alert-icon" viewBox="0 0 24 24">
-                <path d="M12 9v4"/>
-                <path d="M12 17h.01"/>
-                <circle cx="12" cy="12" r="10"/>
-            </svg>
-            <div class="alert-content">
-                <h3>High Priority Conservation Alert</h3>
-                <p id="alertMessage">Based on current GERD water levels and seasonal patterns, increased water conservation is recommended for the next 2 weeks.</p>
-            </div>
-        </div>
-
-        <!-- Guidelines Grid -->
-        <section class="guidelines-grid">
-            <!-- Household Conservation -->
-            <div class="guideline-section">
-                <div class="section-header">
-                    <div class="section-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 10h18M3 14h18m-9-4v8"/>
-                        </svg>
+            <!-- طرق الاستخدام -->
+            <div class="usage-methods">
+                <!-- الطريقة 1: التكامل المباشر (قريباً) -->
+                <div class="method-card">
+                    <div class="method-header">
+                        <div class="method-icon disabled">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="method-title">
+                                <span class="status-coming-soon">قريباً</span>
+                                التكامل المباشر
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <div class="section-title">Household Conservation</div>
-                        <div class="section-subtitle">Smart home water management strategies</div>
+                    <p class="method-description">
+                        ربط مباشر مع حسابك في الشركة القابضة لمياه الشرب والصرف الصحي للحصول على بيانات دقيقة وموثوقة تلقائياً.
+                    </p>
+                    
+                    <div class="demo-login-form disabled">
+                        <div class="form-group">
+                            <label class="form-label">رقم العميل / رقم العداد</label>
+                            <input type="text" class="form-input" placeholder="أدخل رقم العميل أو رقم العداد" disabled>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">رقم الهاتف المسجل</label>
+                            <input type="tel" class="form-input" placeholder="01XXXXXXXXX" disabled>
+                        </div>
+
+                        <div class="demo-hint">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>سيتم إرسال رمز التحقق (OTP) إلى رقم هاتفك المسجل في الشركة</span>
+                        </div>
+                        
+                        <button class="demo-connect-btn" disabled>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            الربط متوقف مؤقتاً - في انتظار الموافقات الرسمية
+                        </button>
+
+                        <div class="demo-hint" style="margin-top: 1rem; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.2);">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                            </svg>
+                            <span>هذه الخاصية غير متاحة حتى إتمام الترتيبات القانونية والأمنية مع الشركة القابضة</span>
+                        </div>
                     </div>
                 </div>
-                
-                <ul class="guideline-list">
-                    <li class="guideline-item">
-                        <div class="guideline-icon">
+
+                <!-- الطريقة 2: رفع الفواتير الورقية (متاح) -->
+                <div class="method-card">
+                    <div class="method-header">
+                        <div class="method-icon">
                             <svg viewBox="0 0 24 24">
-                                <path d="M12 19l7-7 3 3-7 7-3-3z"/>
-                                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
-                                <path d="M2 2l20 20"/>
+                                <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
                         </div>
-                        <div class="guideline-content">
-                            <h4>Fix Leaks Immediately</h4>
-                            <p>A single dripping tap can waste up to 15 liters per day. Regular maintenance prevents significant water loss.</p>
-                            <div class="savings-indicator">Save up to 5,475L/year</div>
+                        <div>
+                            <div class="method-title">
+                                <span class="status-active">متاح الآن</span>
+                                رفع الفواتير الورقية
+                            </div>
                         </div>
-                    </li>
-                    
-                    <li class="guideline-item">
-                        <div class="guideline-icon">
+                    </div>
+                    <p class="method-description">
+                        قم برفع صور فواتيرك الورقية وسيقوم النظام بتحليلها باستخدام تقنيات الذكاء الاصطناعي لاستخراج البيانات وتقديم التوصيات.
+                    </p>
+
+                    <div class="upload-section">
+                        <div class="upload-area" id="billUploadArea">
+                            <div class="upload-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                </svg>
+                            </div>
+                            <div class="upload-text">
+                                <p>اسحب الفواتير هنا أو <span class="upload-link">اختر الملفات</span></p>
+                                <small>يدعم: JPG, PNG, PDF (حتى 5 فواتير)</small>
+                            </div>
+                            <input type="file" id="billFileInput" multiple accept="image/*,application/pdf" style="display: none;">
+                        </div>
+
+                        <div class="demo-hint">
                             <svg viewBox="0 0 24 24">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14,2 14,8 20,8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                <line x1="16" y1="17" x2="8" y2="17"/>
-                                <polyline points="10,9 9,9 8,9"/>
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
+                            <span>البيانات المستخرجة من الفواتير الورقية قد تتطلب مراجعة يدوية للتأكد من دقتها</span>
                         </div>
-                        <div class="guideline-content">
-                            <h4>Install Water-Efficient Appliances</h4>
-                            <p>Replace old appliances with water-efficient models. Modern washing machines use 40% less water.</p>
-                            <div class="savings-indicator">Save up to 8,000L/year</div>
-                        </div>
-                    </li>
-                    
-                    <li class="guideline-item">
-                        <div class="guideline-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M8 2v4"/>
-                                <path d="M16 2v4"/>
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                <path d="M3 10h18"/>
-                                <path d="M8 14h.01"/>
-                                <path d="M12 14h.01"/>
-                                <path d="M16 14h.01"/>
-                            </svg>
-                        </div>
-                        <div class="guideline-content">
-                            <h4>Time Your Water Usage</h4>
-                            <p>Use appliances during off-peak hours and take shorter showers. Limit shower time to 5 minutes or less.</p>
-                            <div class="savings-indicator">Save up to 3,650L/year</div>
-                        </div>
-                    </li>
-                    
-                    <li class="guideline-item">
-                        <div class="guideline-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2v20M12 2l-3 3m3-3l3 3"/>
-                            </svg>
-                        </div>
-                        <div class="guideline-content">
-                            <h4>Collect and Reuse Water</h4>
-                            <p>Collect rainwater and greywater from washing machines for garden irrigation and cleaning.</p>
-                            <div class="savings-indicator">Save up to 12,000L/year</div>
-                        </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
 
-            <!-- Agricultural Conservation -->
-            <div class="guideline-section">
-                <div class="section-header">
-                    <div class="section-icon">
+            <div class="bills-analysis-grid">
+                <!-- قسم الفواتير المرفوعة -->
+                <div class="bill-upload-section">
+                    <h3 class="subsection-title-arabic">الفواتير المرفوعة</h3>
+                    
+                    <div class="uploaded-bills" id="uploadedBills"></div>
+
+                    <button class="analyze-btn" id="analyzeBillsBtn" onclick="analyzeBills()" disabled>
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.35-4.35"/>
+                        </svg>
+                        تحليل الفواتير
+                    </button>
+                </div>
+
+                <!-- قسم النتائج -->
+                <div class="analysis-results-section">
+                    <h3 class="subsection-title-arabic">نتائج التحليل</h3>
+                    
+                    <div class="analysis-card" id="usageAnalysisCard">
+                        <div class="card-header">
+                            <h4>تحليل الاستهلاك الشهري</h4>
+                        </div>
+                        <div class="usage-chart-container">
+                            <canvas id="usageChart"></canvas>
+                        </div>
+                        <div class="usage-summary" id="usageSummary">
+                            <div class="summary-item">
+                                <span class="label">متوسط الاستهلاك:</span>
+                                <span class="value" id="avgUsage">-- لتر/شهر</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">أعلى استهلاك:</span>
+                                <span class="value" id="maxUsage">-- لتر</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">أقل استهلاك:</span>
+                                <span class="value" id="minUsage">-- لتر</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-card" id="leakDetectionCard">
+                        <div class="card-header">
+                            <h4>كشف التسريبات والاستهلاك غير الطبيعي</h4>
+                        </div>
+                        <div class="leak-alerts" id="leakAlerts">
+                            <div class="alert-placeholder">
+                                قم برفع الفواتير لتحليل الاستهلاك
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- نظام النقاط والمكافآت -->
+            <div class="rewards-system">
+                <h3 class="subsection-title-arabic">نظام النقاط والمكافآت</h3>
+                
+                <div class="rewards-grid">
+                    <div class="points-card">
+                        <div class="points-header">
+                            <div class="points-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4>نقاطك الحالية</h4>
+                                <div class="points-value" id="currentPoints">0</div>
+                            </div>
+                        </div>
+                        <div class="points-breakdown">
+                            <div class="point-item">
+                                <span>توفير في الاستهلاك:</span>
+                                <span id="savingsPoints">+0</span>
+                            </div>
+                            <div class="point-item">
+                                <span>استمرارية التوفير:</span>
+                                <span id="consistencyPoints">+0</span>
+                            </div>
+                            <div class="point-item">
+                                <span>كشف التسريبات:</span>
+                                <span id="leakDetectionPoints">+0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievements-card">
+                        <h4>الإنجازات</h4>
+                        <div class="achievements-list" id="achievementsList">
+                            <div class="achievement locked">
+                                <div class="achievement-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+                                    </svg>
+                                </div>
+                                <div class="achievement-info">
+                                    <h5>موفر مياه مبتدئ</h5>
+                                    <p>وفر 1000 لتر في الشهر</p>
+                                </div>
+                            </div>
+                            <div class="achievement locked">
+                                <div class="achievement-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M3.5 18.5l6-6s2.5-2 5-2 5 2 5 2l6 6"/>
+                                        <path d="M3 12.5l6-6s2.5-2 5-2 5 2 5 2l6 6"/>
+                                    </svg>
+                                </div>
+                                <div class="achievement-info">
+                                    <h5>حارس المياه</h5>
+                                    <p>حافظ على التوفير لـ 3 أشهر متتالية</p>
+                                </div>
+                            </div>
+                            <div class="achievement locked">
+                                <div class="achievement-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="11" cy="11" r="8"/>
+                                        <path d="M21 21l-4.35-4.35"/>
+                                    </svg>
+                                </div>
+                                <div class="achievement-info">
+                                    <h5>كاشف التسريبات</h5>
+                                    <p>اكتشف وأصلح تسريب في المنزل</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rewards-card">
+                        <h4>المكافآت المتاحة</h4>
+                        <div class="rewards-list">
+                            <div class="reward-item">
+                                <div class="reward-info">
+                                    <h5>خصم 10% على فاتورة المياه</h5>
+                                    <p>500 نقطة</p>
+                                </div>
+                                <button class="redeem-btn" disabled onclick="redeemReward('discount', 500)">استبدال</button>
+                            </div>
+                            <div class="reward-item">
+                                <div class="reward-info">
+                                    <h5>شهادة تقدير إلكترونية</h5>
+                                    <p>200 نقطة</p>
+                                </div>
+                                <button class="redeem-btn" disabled onclick="redeemReward('certificate', 200)">استبدال</button>
+                            </div>
+                            <div class="reward-item">
+                                <div class="reward-info">
+                                    <h5>أدوات توفير المياه مجاناً</h5>
+                                    <p>1000 نقطة</p>
+                                </div>
+                                <button class="redeem-btn" disabled onclick="redeemReward('tools', 1000)">استبدال</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section style="margin-top: 6rem;">
+    <h2 style="text-align: center; font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #ffffff, #dcfce7, #22c55e); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 3rem; font-family: 'Cairo', sans-serif;">
+        إرشادات توفير المياه التفصيلية
+    </h2>
+    
+    <div class="guidelines-grid" style="direction: rtl;">
+        <!-- الحفاظ على المياه المنزلية -->
+        <div class="guideline-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9,22 9,12 15,12 15,22"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="section-title" style="font-family: 'Cairo', sans-serif;">الحفاظ على المياه المنزلية</div>
+                    <div class="section-subtitle" style="font-family: 'Cairo', sans-serif;">استراتيجيات ذكية لإدارة المياه في المنزل</div>
+                </div>
+            </div>
+            
+            <ul class="guideline-list">
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                            <path d="M2 2l20 20"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">إصلاح التسريبات فوراً</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">صنبور واحد يقطر يمكن أن يهدر ما يصل إلى 15 لتراً يومياً. الصيانة الدورية تمنع فقدان كميات كبيرة من المياه.</p>
+                        <div class="savings-indicator">توفير يصل إلى 5,475 لتر/سنوياً</div>
+                    </div>
+                </li>
+                
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">تركيب أجهزة موفرة للمياه</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">استبدل الأجهزة القديمة بأخرى موفرة للمياه. الغسالات الحديثة تستخدم 40% أقل من المياه.</p>
+                        <div class="savings-indicator">توفير يصل إلى 8,000 لتر/سنوياً</div>
+                    </div>
+                </li>
+                
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M8 2v4"/>
+                            <path d="M16 2v4"/>
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <path d="M3 10h18"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">تنظيم أوقات استخدام المياه</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">استخدم الأجهزة في أوقات خارج الذروة واستحم لمدة أقصر. قلل وقت الاستحمام إلى 5 دقائق أو أقل.</p>
+                        <div class="savings-indicator">توفير يصل إلى 3,650 لتر/سنوياً</div>
+                    </div>
+                </li>
+                
+                <li class="guideline-item">
+                    <div class="guideline-icon">
                         <svg viewBox="0 0 24 24">
                             <path d="M12 2v20M12 2l-3 3m3-3l3 3"/>
-                            <circle cx="12" cy="12" r="3"/>
-                            <path d="M12 1a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                         </svg>
                     </div>
-                    <div>
-                        <div class="section-title">Agricultural Conservation</div>
-                        <div class="section-subtitle">Efficient irrigation and crop management</div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">جمع وإعادة استخدام المياه</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">اجمع مياه الأمطار والمياه الرمادية من الغسالات لري الحديقة والتنظيف.</p>
+                        <div class="savings-indicator">توفير يصل إلى 12,000 لتر/سنوياً</div>
                     </div>
-                </div>
-                
-                <ul class="guideline-list">
-                    <li class="guideline-item">
-                        <div class="guideline-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
-                                <path d="M12 6v6l4 2"/>
-                            </svg>
-                        </div>
-                        <div class="guideline-content">
-                            <h4>Smart Drip Irrigation Systems</h4>
-                            <p>Install automated drip irrigation to reduce water usage by up to 50% compared to traditional flood irrigation.</p>
-                            <div class="savings-indicator">Save up to 50% irrigation water</div>
-                        </div>
-                    </li>
-                    
-                    <li class="guideline-item">
-                        <div class="guideline-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                            </svg>
-                        </div>
-                        <div class="guideline-content">
-                            <h4>Drought-Resistant Crop Selection</h4>
-                            <p>Choose crops adapted to local climate conditions and requiring less water for optimal growth.</p>
-                            <div class="savings-indicator">Reduce water needs by 30%</div>
-                        </div>
-                    </li>
-                    
-                    <li class="guideline-item">
-                        <div class="guideline-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M3.5 18.5l6-6s2.5-2 5-2 5 2 5 2l6 6"/>
-                                <path d="M3 12.5l6-6s2.5-2 5-2 5 2 5 2l6 6"/>
-                            </svg>
-                        </div>
-                        <div class="guideline-content">
-                            <h4>Soil Moisture Monitoring</h4>
-                            <p>Use sensors to monitor soil moisture levels and irrigate only when necessary, preventing over-watering.</p>
-                            <div class="savings-indicator">Optimize water usage by 25%</div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                </li>
 
-            <!-- Industrial Conservation -->
-            <div class="guideline-section">
-                <div class="section-header">
-                    <div class="section-icon">
+                <li class="guideline-item">
+                    <div class="guideline-icon">
                         <svg viewBox="0 0 24 24">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                            <line x1="8" y1="21" x2="16" y2="21"/>
-                            <line x1="12" y1="17" x2="12" y2="21"/>
+                            <path d="M3.5 18.5l6-6s2.5-2 5-2 5 2 5 2l6 6"/>
                         </svg>
                     </div>
-                    <div>
-                        <div class="section-title">Industrial Conservation</div>
-                        <div class="section-subtitle">Enterprise-level water optimization</div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">رؤوس دش موفرة</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">تركيب رؤوس دش موفرة للمياه يمكن أن يقلل الاستهلاك بنسبة 50% دون التأثير على ضغط المياه.</p>
+                        <div class="savings-indicator">توفير يصل إلى 7,300 لتر/سنوياً</div>
                     </div>
-                </div>
-                
-                <ul class="guideline-list">
-                    <li class="guideline-item">
-                        <div class="guideline-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14,2 14,8 20,8"/>
-                            </svg>
-                        </div>
-                        <div class="guideline-content">
-                            <h4>Water Recycling Systems</h4>
-                            <p>Implement closed-loop water systems to recycle and reuse industrial process water multiple times.</p>
-                            <div class="savings-indicator">Reduce intake by 60-80%</div>
-                        </div>
-                    </li>
-                    
-                    <li class="guideline-item">
-                        <div class="guideline-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/>
-                            </svg>
-                        </div>
-                        <div class="guideline-content">
-                            <h4>Regular Water Audits</h4>
-                            <p>Conduct monthly water audits to identify inefficiencies and implement targeted conservation measures.</p>
-                            <div class="savings-indicator">Identify 15-25% savings</div>
-                        </div>
-                    </li>
-                    
-                    <li class="guideline-item">
-                        <div class="guideline-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15A2.5 2.5 0 0 1 9.5 22 2.5 2.5 0 0 1 7 19.5A2.5 2.5 0 0 1 9.5 17 2.5 2.5 0 0 1 12 19.5V4.5A2.5 2.5 0 0 1 9.5 2z"/>
-                            </svg>
-                        </div>
-                        <div class="guideline-content">
-                            <h4>Employee Training Programs</h4>
-                            <p>Train staff on water conservation practices and implement reward systems for reduction achievements.</p>
-                            <div class="savings-indicator">Achieve 10-20% reduction</div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </section>
+                </li>
 
-        <!-- Water Savings Calculator -->
-        <section class="calculator-section">
-            <h2 class="calculator-title">Personalized Water Savings Calculator</h2>
-            <div class="calculator-grid">
-                <div>
-                    <div class="input-group">
-                        <label class="input-label" for="householdSize">Household Size (people)</label>
-                        <input type="number" id="householdSize" class="input-field" value="4" min="1" max="20">
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12,6 12,12 16,14"/>
+                        </svg>
                     </div>
-                    
-                    <div class="input-group">
-                        <label class="input-label" for="currentUsage">Current Monthly Usage (liters)</label>
-                        <input type="number" id="currentUsage" class="input-field" value="15000" min="1000" max="100000">
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">مراقبة العداد بانتظام</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">تحقق من قراءات عداد المياه أسبوعياً لاكتشاف أي استهلاك غير طبيعي أو تسريبات مخفية.</p>
+                        <div class="savings-indicator">اكتشاف مبكر للتسريبات</div>
                     </div>
-                    
-                    <div class="input-group">
-                        <label class="input-label" for="conservationLevel">Conservation Level</label>
-                        <select id="conservationLevel" class="input-field">
-                            <option value="10">Basic Conservation (10%)</option>
-                            <option value="20" selected>Moderate Conservation (20%)</option>
-                            <option value="35">Advanced Conservation (35%)</option>
-                            <option value="50">Maximum Conservation (50%)</option>
-                        </select>
-                    </div>
-                    
-                    <button class="calculate-btn" onclick="calculateWaterSavings()">Calculate My Savings</button>
-                </div>
-                
-                <div class="results-panel">
-                    <div class="result-item">
-                        <span class="result-label">Monthly Savings</span>
-                        <span class="result-value savings" id="monthlySavings">3,000L</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Annual Savings</span>
-                        <span class="result-value savings" id="annualSavings">36,000L</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Cost Savings/Year</span>
-                        <span class="result-value savings" id="costSavings">$180</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Environmental Impact</span>
-                        <span class="result-value" id="environmentalImpact">Excellent</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Conservation Rating</span>
-                        <span class="result-value" id="conservationRating">A</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Smart Tips Based on Real-Time Data -->
-        <section class="tips-section">
-            <h2 class="tips-title">AI-Powered Conservation Tips</h2>
-            <div class="smart-tips-grid" id="smartTipsGrid">
-                <!-- Tips will be populated by JavaScript based on real-time conditions -->
-            </div>
-        </section>
-
-        <!-- Data-Driven Insights -->
-        <section class="data-driven-section">
-            <h2 class="section-title">
-                <svg class="section-icon" viewBox="0 0 24 24">
-                    <path d="M3 13h18M3 17h18M3 21h18M21 3H3v4h18z"/>
-                </svg>
-                Real-Time Data Insights
-            </h2>
-            
-            <div class="chart-container">
-                <div class="chart-title">GERD Impact on Conservation Priorities</div>
-                <div id="impactChart"></div>
-            </div>
-            
-            <div class="chart-container">
-                <div class="chart-title">Regional Water Usage Patterns</div>
-                <div id="usageChart"></div>
-            </div>
-            
-            <div class="chart-container">
-                <div class="chart-title">Conservation Effectiveness by Method</div>
-                <div id="effectivenessChart"></div>
-            </div>
-        </section>
-
-        <!-- Footer Statistics -->
-        <div class="footer-stats">
-            <h3>Based on Real-Time GERD Monitoring Data</h3>
-            <p>These conservation guidelines are dynamically updated based on current GERD water levels, 
-            Nile River flow rates, and seasonal patterns. Our AI analyzes over 50 data points every hour 
-            to provide the most relevant conservation strategies for your region.</p>
+                </li>
+            </ul>
         </div>
+
+        <!-- الحفاظ على المياه الزراعية -->
+        <div class="guideline-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2v20M12 2l-3 3m3-3l3 3"/>
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 1a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="section-title" style="font-family: 'Cairo', sans-serif;">الحفاظ على المياه الزراعية</div>
+                    <div class="section-subtitle" style="font-family: 'Cairo', sans-serif;">أنظمة ري فعالة وإدارة المحاصيل</div>
+                </div>
+            </div>
+            
+            <ul class="guideline-list">
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">أنظمة الري بالتنقيط الذكية</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">تركيب نظام ري بالتنقيط آلي يقلل استخدام المياه بنسبة تصل إلى 50% مقارنة بالري التقليدي بالغمر.</p>
+                        <div class="savings-indicator">توفير حتى 50% من مياه الري</div>
+                    </div>
+                </li>
+                
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">اختيار محاصيل مقاومة للجفاف</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">اختر محاصيل متكيفة مع الظروف المناخية المحلية وتتطلب كميات أقل من المياه للنمو الأمثل.</p>
+                        <div class="savings-indicator">تقليل احتياجات المياه بنسبة 30%</div>
+                    </div>
+                </li>
+                
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3.5 18.5l6-6s2.5-2 5-2 5 2 5 2l6 6"/>
+                            <path d="M3 12.5l6-6s2.5-2 5-2 5 2 5 2l6 6"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">مراقبة رطوبة التربة</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">استخدم أجهزة استشعار لمراقبة مستويات رطوبة التربة والري فقط عند الضرورة، مما يمنع الإفراط في الري.</p>
+                        <div class="savings-indicator">تحسين استخدام المياه بنسبة 25%</div>
+                    </div>
+                </li>
+
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/>
+                            <path d="M12 13v9"/>
+                            <path d="M8 17l4 4 4-4"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">جمع مياه الأمطار الزراعية</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">إنشاء خزانات لجمع مياه الأمطار واستخدامها للري في المواسم الجافة.</p>
+                        <div class="savings-indicator">توفير آلاف اللترات موسمياً</div>
+                    </div>
+                </li>
+
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <path d="M3 9h18"/>
+                            <path d="M9 21V9"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">التغطية والمهاد</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">استخدام المهاد العضوي حول النباتات يقلل التبخر ويحافظ على رطوبة التربة.</p>
+                        <div class="savings-indicator">تقليل التبخر بنسبة 40%</div>
+                    </div>
+                </li>
+
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 16v-4"/>
+                            <path d="M12 8h.01"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">الري في الأوقات المثلى</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">الري في الصباح الباكر أو المساء لتقليل فقدان المياه بسبب التبخر.</p>
+                        <div class="savings-indicator">توفير 20-30% من مياه الري</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- الحفاظ على المياه الصناعية -->
+        <div class="guideline-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="section-title" style="font-family: 'Cairo', sans-serif;">الحفاظ على المياه الصناعية</div>
+                    <div class="section-subtitle" style="font-family: 'Cairo', sans-serif;">تحسين استخدام المياه على مستوى المؤسسات</div>
+                </div>
+            </div>
+            
+            <ul class="guideline-list">
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">أنظمة إعادة تدوير المياه</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">تطبيق أنظمة دائرة مغلقة لإعادة تدوير واستخدام مياه العمليات الصناعية عدة مرات.</p>
+                        <div class="savings-indicator">تقليل الاستهلاك بنسبة 60-80%</div>
+                    </div>
+                </li>
+                
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">عمليات تدقيق المياه الدورية</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">إجراء تدقيق شهري للمياه لتحديد أوجه القصور وتطبيق تدابير الحفاظ المستهدفة.</p>
+                        <div class="savings-indicator">تحديد فرص توفير 15-25%</div>
+                    </div>
+                </li>
+                
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">برامج تدريب الموظفين</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">تدريب الموظفين على ممارسات الحفاظ على المياه وتطبيق أنظمة المكافآت لتحقيق الإنجازات.</p>
+                        <div class="savings-indicator">تحقيق تخفيض 10-20%</div>
+                    </div>
+                </li>
+
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22,4 12,14.01 9,11.01"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">تقنيات التبريد الموفرة</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">استخدام أنظمة تبريد موفرة للمياه أو التحول إلى أنظمة تبريد بالهواء حيثما أمكن.</p>
+                        <div class="savings-indicator">توفير ملايين اللترات سنوياً</div>
+                    </div>
+                </li>
+
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">أنظمة مراقبة ذكية</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">تركيب أجهزة استشعار وأنظمة مراقبة في الوقت الفعلي للكشف الفوري عن التسريبات والاستهلاك غير الطبيعي.</p>
+                        <div class="savings-indicator">استجابة فورية للمشاكل</div>
+                    </div>
+                </li>
+
+                <li class="guideline-item">
+                    <div class="guideline-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <div class="guideline-content">
+                        <h4 style="font-family: 'Cairo', sans-serif;">معالجة المياه وإعادة استخدامها</h4>
+                        <p style="font-family: 'Cairo', sans-serif;">معالجة المياه المستخدمة وإعادة استخدامها للعمليات غير الحرجة أو الري.</p>
+                        <div class="savings-indicator">إعادة استخدام 40-60% من المياه</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- حاسبة توفير المياه الشخصية المحسنة -->
+<!-- حاسبة الاستهلاك الطبيعي للمياه -->
+<section class="calculator-section" style="margin-top: 6rem; direction: rtl;">
+    <h2 class="calculator-title" style="font-family: 'Cairo', sans-serif;">حاسبة الاستهلاك الطبيعي للمياه</h2>
+    <p style="text-align: center; color: rgba(255,255,255,0.8); max-width: 800px; margin: 0 auto 3rem; font-size: 1.1rem; font-family: 'Cairo', sans-serif;">
+        احسب معدل الاستهلاك الطبيعي المتوقع لمنزلك وحجم الخزان المناسب بناءً على عدد الأفراد والمرافق المتاحة
+    </p>
+    
+    <div class="calculator-grid">
+        <div>
+            <div class="input-group">
+                <label class="input-label" for="householdSizeAr" style="font-family: 'Cairo', sans-serif;">عدد أفراد الأسرة</label>
+                <input type="number" id="householdSizeAr" class="input-field" value="4" min="1" max="20" onchange="calculateWaterSavingsAr()" style="font-family: 'Cairo', sans-serif;">
+                <small style="color: rgba(255,255,255,0.6); display: block; margin-top: 0.5rem; font-family: 'Cairo', sans-serif;">
+                    عدد الأشخاص الذين يعيشون في المنزل بشكل دائم
+                </small>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label" for="housingTypeAr" style="font-family: 'Cairo', sans-serif;">نوع المسكن</label>
+                <select id="housingTypeAr" class="input-field" onchange="calculateWaterSavingsAr()" style="font-family: 'Cairo', sans-serif;">
+                    <option value="apartment">شقة</option>
+                    <option value="villa">فيلا/منزل مستقل</option>
+                    <option value="villa_garden">فيلا بحديقة</option>
+                </select>
+                <small style="color: rgba(255,255,255,0.6); display: block; margin-top: 0.5rem; font-family: 'Cairo', sans-serif;">
+                    نوع المسكن يؤثر على الاستهلاك
+                </small>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label" for="bathroomsAr" style="font-family: 'Cairo', sans-serif;">عدد دورات المياه</label>
+                <input type="number" id="bathroomsAr" class="input-field" value="2" min="1" max="10" onchange="calculateWaterSavingsAr()" style="font-family: 'Cairo', sans-serif;">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" style="font-family: 'Cairo', sans-serif;">الأجهزة المتوفرة</label>
+                <div style="display: grid; gap: 0.75rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" id="hasWashingMachineAr" checked onchange="calculateWaterSavingsAr()" style="width: 18px; height: 18px;">
+                        <span style="font-family: 'Cairo', sans-serif; color: rgba(255,255,255,0.9);">غسالة ملابس</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" id="hasDishwasherAr" onchange="calculateWaterSavingsAr()" style="width: 18px; height: 18px;">
+                        <span style="font-family: 'Cairo', sans-serif; color: rgba(255,255,255,0.9);">غسالة أطباق</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label" for="currentUsageAr" style="font-family: 'Cairo', sans-serif;">الاستهلاك الحالي (اختياري)</label>
+                <input type="number" id="currentUsageAr" class="input-field" placeholder="أدخل استهلاكك الحالي" min="0" max="100000" onchange="calculateWaterSavingsAr()" style="font-family: 'Cairo', sans-serif;">
+                <small style="color: rgba(255,255,255,0.6); display: block; margin-top: 0.5rem; font-family: 'Cairo', sans-serif;">
+                    من فاتورة المياه لمقارنة استهلاكك بالمعدل الطبيعي
+                </small>
+            </div>
+            
+            <button class="calculate-btn" onclick="calculateWaterSavingsAr()" style="font-family: 'Cairo', sans-serif;">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                احسب الاستهلاك المتوقع
+            </button>
+        </div>
+        
+        <div class="results-panel">
+            <h3 style="font-family: 'Cairo', sans-serif; color: rgba(255,255,255,0.9); font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;">النتائج المتوقعة</h3>
+            
+            <div class="result-item">
+                <span class="result-label" style="font-family: 'Cairo', sans-serif;">الاستهلاك اليومي الطبيعي</span>
+                <span class="result-value" id="dailyUsageAr" style="font-family: 'Cairo', sans-serif;">800 لتر</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label" style="font-family: 'Cairo', sans-serif;">الاستهلاك الشهري المتوقع</span>
+                <span class="result-value" id="monthlyUsageAr" style="font-family: 'Cairo', sans-serif;">24,000 لتر</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label" style="font-family: 'Cairo', sans-serif;">حجم الخزان الموصى به</span>
+                <span class="result-value savings" id="tankSizeAr" style="font-family: 'Cairo', sans-serif;">2,000 لتر</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label" style="font-family: 'Cairo', sans-serif;">التكلفة الشهرية المتوقعة</span>
+                <span class="result-value" id="monthlyCostAr" style="font-family: 'Cairo', sans-serif;">720 جنيه</span>
+            </div>
+            <div class="result-item" id="comparisonRow" style="display: none;">
+                <span class="result-label" style="font-family: 'Cairo', sans-serif;">تقييم استهلاكك</span>
+                <span class="result-value" id="usageStatusAr" style="font-family: 'Cairo', sans-serif;">طبيعي</span>
+            </div>
+            
+            <div id="usageAlertAr" style="margin-top: 2rem; padding: 1.5rem; border-radius: 12px; border: 1px solid; display: none;">
+                <h4 style="font-family: 'Cairo', sans-serif; font-size: 1.1rem; margin-bottom: 1rem;"></h4>
+                <p style="font-family: 'Cairo', sans-serif; line-height: 1.6;"></p>
+            </div>
+        </div>
+    </div>
+    
+    <div style="margin-top: 3rem; padding: 2rem; background: rgba(6, 182, 212, 0.1); border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.3); direction: rtl;">
+        <h3 style="font-family: 'Cairo', sans-serif; color: #06b6d4; font-size: 1.3rem; margin-bottom: 1rem;">تفصيل الاستهلاك اليومي المتوقع</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                <div style="font-family: 'Cairo', sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9rem;">الاستحمام والنظافة</div>
+                <div style="font-family: 'Cairo', sans-serif; color: #06b6d4; font-size: 1.5rem; font-weight: 700; margin-top: 0.5rem;" id="showerUsageAr">400 لتر</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                <div style="font-family: 'Cairo', sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9rem;">دورات المياه</div>
+                <div style="font-family: 'Cairo', sans-serif; color: #06b6d4; font-size: 1.5rem; font-weight: 700; margin-top: 0.5rem;" id="toiletUsageAr">200 لتر</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                <div style="font-family: 'Cairo', sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9rem;">الطبخ والشرب</div>
+                <div style="font-family: 'Cairo', sans-serif; color: #06b6d4; font-size: 1.5rem; font-weight: 700; margin-top: 0.5rem;" id="cookingUsageAr">100 لتر</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                <div style="font-family: 'Cairo', sans-serif; color: rgba(255,255,255,0.7); font-size: 0.9rem;">الغسيل والتنظيف</div>
+                <div style="font-family: 'Cairo', sans-serif; color: #06b6d4; font-size: 1.5rem; font-weight: 700; margin-top: 0.5rem;" id="cleaningUsageAr">100 لتر</div>
+            </div>
+        </div>
+    </div>
+</section>
     </div>
 
     <script>
-        // Global variables
-        let realTimeData = null;
-        const WATER_COST_PER_LITER = 0.005; // $0.005 per liter (example)
+        // متغيرات نظام الفواتير والنقاط
+        let uploadedBills = [];
+        let userPoints = 0;
+        let analysisChart = null;
+        let billAnalysisResults = {};
 
-        // Initialize the conservation guide
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            initializeConservationGuide();
             createFloatingParticles();
-            loadRealTimeData();
+            initializeBillUpload();
+            
+            // رسالة ترحيب
+            setTimeout(() => {
+                showNotification('مرحباً بك في نظام تحليل فواتير المياه الذكي! (وضع تجريبي)', 'warning');
+            }, 1000);
         });
-
-        function initializeConservationGuide() {
-            console.log('Initializing Water Conservation Guide...');
-            calculateWaterSavings();
-            generateSmartTips();
-            createDataCharts();
-        }
 
         function createFloatingParticles() {
             const container = document.getElementById('backgroundEffects');
@@ -1185,302 +2180,667 @@
             }
         }
 
-        async function loadRealTimeData() {
-            try {
-                // Simulate fetching real-time data from the monitoring system
-                realTimeData = {
-                    gerdLevel: 635.2,
-                    nileFlow: 85.5,
-                    rainfall: 2.3,
-                    temperature: 28.5,
-                    seasonalTrend: 'decreasing',
-                    conservationPriority: 'high'
-                };
-                
-                updateStatsBanner();
-                updateConservationAlert();
-                generateContextualTips();
-                
-            } catch (error) {
-                console.error('Error loading real-time data:', error);
-                // Use fallback data
-                realTimeData = {
-                    gerdLevel: 630.0,
-                    nileFlow: 80.0,
-                    rainfall: 1.5,
-                    temperature: 30.0,
-                    seasonalTrend: 'stable',
-                    conservationPriority: 'moderate'
-                };
+        function initializeBillUpload() {
+            const uploadArea = document.getElementById('billUploadArea');
+            const fileInput = document.getElementById('billFileInput');
+            
+            uploadArea.addEventListener('click', () => fileInput.click());
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('drop', handleDrop);
+            uploadArea.addEventListener('dragleave', handleDragLeave);
+            
+            fileInput.addEventListener('change', handleFileSelect);
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            document.getElementById('billUploadArea').classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            document.getElementById('billUploadArea').classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            document.getElementById('billUploadArea').classList.remove('drag-over');
+            const files = e.dataTransfer.files;
+            processUploadedFiles(files);
+        }
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            processUploadedFiles(files);
+        }
+
+        function processUploadedFiles(files) {
+            const maxFiles = 5;
+            const acceptedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+            
+            if (uploadedBills.length + files.length > maxFiles) {
+                showNotification(`يمكنك رفع ${maxFiles} فواتير كحد أقصى`, 'error');
+                return;
             }
-        }
-
-        function updateStatsBanner() {
-            if (!realTimeData) return;
             
-            document.getElementById('currentWaterLevel').textContent = realTimeData.gerdLevel.toFixed(0) + 'm';
-            
-            // Calculate dynamic potential savings based on GERD level
-            const savingsPercentage = realTimeData.gerdLevel < 630 ? 40 : 
-                                    realTimeData.gerdLevel < 635 ? 30 : 20;
-            document.getElementById('potentialSavings').textContent = savingsPercentage + '%';
-            
-            // Update other dynamic stats
-            document.getElementById('activeUsers').textContent = (2.1 + Math.random() * 0.6).toFixed(1) + 'K';
-            document.getElementById('totalSaved').textContent = Math.floor(120 + Math.random() * 50) + 'M';
-        }
-
-        function updateConservationAlert() {
-            if (!realTimeData) return;
-            
-            const alertBanner = document.getElementById('conservationAlert');
-            const alertMessage = document.getElementById('alertMessage');
-            
-            if (realTimeData.conservationPriority === 'high' || realTimeData.gerdLevel < 632) {
-                alertBanner.style.display = 'flex';
-                alertMessage.textContent = `Current GERD water level (${realTimeData.gerdLevel}m) indicates increased conservation measures are recommended. Implement advanced water-saving techniques immediately.`;
-            } else if (realTimeData.conservationPriority === 'moderate') {
-                alertBanner.style.display = 'flex';
-                alertBanner.style.background = 'rgba(245, 158, 11, 0.1)';
-                alertBanner.style.borderColor = 'rgba(245, 158, 11, 0.3)';
-                alertMessage.textContent = `Moderate conservation recommended based on current conditions. Focus on household efficiency measures.`;
-            }
-        }
-
-        function calculateWaterSavings() {
-            const householdSize = parseInt(document.getElementById('householdSize').value) || 4;
-            const currentUsage = parseInt(document.getElementById('currentUsage').value) || 15000;
-            const conservationLevel = parseInt(document.getElementById('conservationLevel').value) || 20;
-            
-            const monthlySavings = (currentUsage * conservationLevel) / 100;
-            const annualSavings = monthlySavings * 12;
-            const costSavings = annualSavings * WATER_COST_PER_LITER;
-            
-            document.getElementById('monthlySavings').textContent = monthlySavings.toLocaleString() + 'L';
-            document.getElementById('annualSavings').textContent = annualSavings.toLocaleString() + 'L';
-            document.getElementById('costSavings').textContent = '$' + costSavings.toFixed(0);
-            
-            // Update environmental impact and rating
-            const environmentalImpact = conservationLevel >= 35 ? 'Excellent' : 
-                                       conservationLevel >= 20 ? 'Good' : 'Fair';
-            const conservationRating = conservationLevel >= 35 ? 'A+' : 
-                                      conservationLevel >= 20 ? 'A' : 'B';
-            
-            document.getElementById('environmentalImpact').textContent = environmentalImpact;
-            document.getElementById('conservationRating').textContent = conservationRating;
-        }
-
-        function generateSmartTips() {
-            const tipsGrid = document.getElementById('smartTipsGrid');
-            const baseTips = [
-                {
-                    icon: `<svg viewBox="0 0 24 24"><path d="M12 2v20M12 2l-3 3m3-3l3 3"/></svg>`,
-                    title: 'Smart Shower Timer',
-                    description: 'Install a smart shower timer that alerts you after 5 minutes. This simple device can save up to 75L per shower.',
-                    impact: 'High Impact: 2,190L/month'
-                },
-                {
-                    icon: `<svg viewBox="0 0 24 24"><path d="M8 2v4M16 2v4M3 4h18v18H3z"/></svg>`,
-                    title: 'Load-Based Laundry',
-                    description: 'Only run washing machines and dishwashers with full loads. Modern machines adjust water usage automatically.',
-                    impact: 'Medium Impact: 950L/month'
-                },
-                {
-                    icon: `<svg viewBox="0 0 24 24"><path d="M3.5 18.5l6-6s2.5-2 5-2 5 2 5 2l6 6"/></svg>`,
-                    title: 'Rainwater Harvesting',
-                    description: 'Set up a simple rainwater collection system for garden watering and outdoor cleaning tasks.',
-                    impact: 'High Impact: 3,500L/month'
-                },
-                {
-                    icon: `<svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>`,
-                    title: 'Greywater Recycling',
-                    description: 'Reuse water from hand washing and food preparation for watering plants and cleaning floors.',
-                    impact: 'Medium Impact: 1,400L/month'
-                },
-                {
-                    icon: `<svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/></svg>`,
-                    title: 'Leak Detection Apps',
-                    description: 'Use smartphone apps connected to smart water meters to detect leaks early and prevent waste.',
-                    impact: 'Critical: Prevent 5,000L+ losses'
-                },
-                {
-                    icon: `<svg viewBox="0 0 24 24"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15A2.5 2.5 0 0 1 9.5 22"/></svg>`,
-                    title: 'Native Plant Landscaping',
-                    description: 'Replace water-intensive grass with native plants that require 60% less irrigation.',
-                    impact: 'High Impact: 4,200L/month'
+            Array.from(files).forEach(file => {
+                if (!acceptedTypes.includes(file.type)) {
+                    showNotification(`نوع الملف غير مدعوم: ${file.name}`, 'error');
+                    return;
                 }
-            ];
-            
-            baseTips.forEach(tip => {
-                const tipElement = document.createElement('div');
-                tipElement.className = 'smart-tip';
-                tipElement.innerHTML = `
-                    <div class="tip-icon">${tip.icon}</div>
-                    <div class="tip-title">${tip.title}</div>
-                    <div class="tip-description">${tip.description}</div>
-                    <div class="impact-badge">${tip.impact}</div>
-                `;
-                tipsGrid.appendChild(tipElement);
+                
+                if (file.size > 5 * 1024 * 1024) {
+                    showNotification(`حجم الملف كبير جداً: ${file.name}`, 'error');
+                    return;
+                }
+                
+                const bill = {
+                    id: Date.now() + Math.random(),
+                    file: file,
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    preview: null
+                };
+                
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        bill.preview = e.target.result;
+                        updateBillsList();
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    bill.preview = null;
+                    updateBillsList();
+                }
+                
+                uploadedBills.push(bill);
             });
+            
+            updateAnalyzeButtonState();
         }
 
-        function generateContextualTips() {
-            if (!realTimeData) return;
-            
-            const contextualTips = [];
-            
-            if (realTimeData.gerdLevel < 632) {
-                contextualTips.push({
-                    icon: `<svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01"/></svg>`,
-                    title: 'Critical Water Alert',
-                    description: 'GERD water level is critically low. Implement emergency conservation measures immediately.',
-                    impact: 'Emergency Protocol Active'
-                });
-            }
-            
-            if (realTimeData.temperature > 30) {
-                contextualTips.push({
-                    icon: `<svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>`,
-                    title: 'High Temperature Advisory',
-                    description: 'Current temperature is above 30°C. Increase indoor humidity with water-efficient methods.',
-                    impact: 'Seasonal Adjustment'
-                });
-            }
-            
-            if (realTimeData.rainfall < 2) {
-                contextualTips.push({
-                    icon: `<svg viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/></svg>`,
-                    title: 'Low Rainfall Period',
-                    description: 'Rainfall is below normal. Focus on outdoor water conservation and drought-resistant practices.',
-                    impact: 'Weather-Based Priority'
-                });
-            }
-            
-            // Add contextual tips to the grid
-            const tipsGrid = document.getElementById('smartTipsGrid');
-            contextualTips.forEach(tip => {
-                const tipElement = document.createElement('div');
-                tipElement.className = 'smart-tip';
-                tipElement.style.borderColor = 'rgba(239, 68, 68, 0.3)';
-                tipElement.innerHTML = `
-                    <div class="tip-icon" style="background: rgba(239, 68, 68, 0.2);">
-                        <svg viewBox="0 0 24 24" style="fill: #ef4444;">${tip.icon}</svg>
+        function updateBillsList() {
+            const container = document.getElementById('uploadedBills');
+            container.innerHTML = uploadedBills.map(bill => `
+                <div class="bill-item" data-id="${bill.id}">
+                    ${bill.preview ? 
+                        `<img src="${bill.preview}" alt="${bill.name}" class="bill-preview">` :
+                        `<div class="bill-preview" style="background: rgba(34, 197, 94, 0.2); display: flex; align-items: center; justify-content: center; color: #22c55e; font-weight: bold;">PDF</div>`
+                    }
+                    <div class="bill-info">
+                        <div class="bill-name">${bill.name}</div>
+                        <div class="bill-size">${formatFileSize(bill.size)}</div>
                     </div>
-                    <div class="tip-title">${tip.title}</div>
-                    <div class="tip-description">${tip.description}</div>
-                    <div class="impact-badge" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; border-color: rgba(239, 68, 68, 0.3);">${tip.impact}</div>
+                    <div class="bill-remove" onclick="removeBill('${bill.id}')">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function removeBill(billId) {
+            uploadedBills = uploadedBills.filter(bill => bill.id != billId);
+            updateBillsList();
+            updateAnalyzeButtonState();
+        }
+
+        function updateAnalyzeButtonState() {
+            const btn = document.getElementById('analyzeBillsBtn');
+            btn.disabled = uploadedBills.length === 0;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        async function analyzeBills() {
+            const btn = document.getElementById('analyzeBillsBtn');
+            btn.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <div style="width: 20px; height: 20px; border: 2px solid #22c55e; border-top: 2px solid transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                    جاري التحليل...
+                </div>
+            `;
+            btn.disabled = true;
+
+            await new Promise(resolve => setTimeout(resolve, 3000));
+
+            const extractedData = simulateOCRExtraction();
+            billAnalysisResults = analyzeBillData(extractedData);
+            
+            displayAnalysisResults();
+            calculatePoints();
+
+            btn.innerHTML = `
+                <svg viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                </svg>
+                تحليل الفواتير
+            `;
+            btn.disabled = false;
+            
+            showNotification('تم تحليل الفواتير بنجاح!', 'success');
+        }
+
+        function simulateOCRExtraction() {
+            const months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'];
+            const baseUsage = 12000;
+            
+            return uploadedBills.map((bill, index) => {
+                const variation = Math.random() * 0.4 - 0.2;
+                const seasonalFactor = Math.sin((index * 2 * Math.PI) / 12) * 0.15;
+                const leakFactor = (index === 2) ? 0.6 : 0;
+                
+                const usage = Math.round(baseUsage * (1 + variation + seasonalFactor + leakFactor));
+                const cost = usage * 0.003;
+                
+                return {
+                    month: months[index] || `الشهر ${index + 1}`,
+                    usage: usage,
+                    cost: cost,
+                    previousReading: Math.round(Math.random() * 100000),
+                    currentReading: Math.round(Math.random() * 100000 + 1000),
+                    daysInPeriod: 30 + Math.round(Math.random() * 5 - 2)
+                };
+            });
+        }
+
+        function analyzeBillData(extractedData) {
+            const usages = extractedData.map(item => item.usage);
+            const avgUsage = usages.reduce((a, b) => a + b, 0) / usages.length;
+            const maxUsage = Math.max(...usages);
+            const minUsage = Math.min(...usages);
+            
+            const alerts = [];
+            extractedData.forEach((item, index) => {
+                const deviation = (item.usage - avgUsage) / avgUsage;
+                
+                if (deviation > 0.3) {
+                    alerts.push({
+                        type: 'leak',
+                        severity: 'high',
+                        month: item.month,
+                        message: `استهلاك مرتفع بشكل غير طبيعي (${Math.round(deviation * 100)}% أعلى من المتوسط)`,
+                        suggestion: 'فحص الأنابيب والصنابير للتأكد من عدم وجود تسريبات'
+                    });
+                } else if (deviation > 0.15) {
+                    alerts.push({
+                        type: 'warning',
+                        severity: 'medium',
+                        month: item.month,
+                        message: `استهلاك أعلى من المعتاد (${Math.round(deviation * 100)}% أعلى من المتوسط)`,
+                        suggestion: 'مراجعة عادات استخدام المياه'
+                    });
+                }
+            });
+
+            if (usages.length >= 3) {
+                const recentAvg = usages.slice(-2).reduce((a, b) => a + b, 0) / 2;
+                const earlierAvg = usages.slice(0, -2).reduce((a, b) => a + b, 0) / (usages.length - 2);
+                const improvement = (earlierAvg - recentAvg) / earlierAvg;
+                
+                if (improvement > 0.1) {
+                    alerts.push({
+                        type: 'success',
+                        severity: 'positive',
+                        month: 'الأشهر الأخيرة',
+                        message: `تحسن ملحوظ في توفير المياه (${Math.round(improvement * 100)}% انخفاض)`,
+                        suggestion: 'استمر في هذا الأداء الممتاز!'
+                    });
+                }
+            }
+            
+            return {
+                extractedData,
+                avgUsage,
+                maxUsage,
+                minUsage,
+                alerts,
+                totalUsage: usages.reduce((a, b) => a + b, 0),
+                totalCost: extractedData.reduce((total, item) => total + item.cost, 0)
+            };
+        }
+
+        function displayAnalysisResults() {
+            const { extractedData, avgUsage, maxUsage, minUsage, alerts } = billAnalysisResults;
+            
+            document.getElementById('avgUsage').textContent = `${Math.round(avgUsage).toLocaleString()} لتر/شهر`;
+            document.getElementById('maxUsage').textContent = `${Math.round(maxUsage).toLocaleString()} لتر`;
+            document.getElementById('minUsage').textContent = `${Math.round(minUsage).toLocaleString()} لتر`;
+            
+            createUsageChart(extractedData);
+            displayAlerts(alerts);
+        }
+
+        function createUsageChart(data) {
+            const ctx = document.getElementById('usageChart');
+            
+            if (analysisChart) {
+                analysisChart.destroy();
+            }
+            
+            analysisChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(item => item.month),
+                    datasets: [{
+                        label: 'الاستهلاك الشهري (لتر)',
+                        data: data.map(item => item.usage),
+                        borderColor: '#22c55e',
+                        backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#22c55e',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'rgba(255,255,255,0.9)',
+                                font: {
+                                    family: 'Cairo'
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: 'rgba(255,255,255,0.7)',
+                                callback: function(value) {
+                                    return value.toLocaleString() + ' L';
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255,255,255,0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: 'rgba(255,255,255,0.7)',
+                                font: {
+                                    family: 'Cairo'
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255,255,255,0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function displayAlerts(alerts) {
+            const container = document.getElementById('leakAlerts');
+            
+            if (alerts.length === 0) {
+                container.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 8px;">
+                        <svg style="width: 24px; height: 24px; fill: #22c55e; flex-shrink: 0;" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <div>
+                            <div style="font-weight: 600; margin-bottom: 0.25rem; font-family: 'Cairo'; color: #22c55e;">لم يتم رصد أي مشاكل</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8; font-family: 'Cairo'; color: rgba(255,255,255,0.8);">استهلاكك للمياه ضمن المعدل الطبيعي</div>
+                        </div>
+                    </div>
                 `;
-                tipsGrid.insertBefore(tipElement, tipsGrid.firstChild);
-            });
+                return;
+            }
+            
+            container.innerHTML = alerts.map(alert => {
+                const colorMap = {
+                    'leak': '#ef4444',
+                    'warning': '#f59e0b',
+                    'success': '#22c55e'
+                };
+                
+                const bgMap = {
+                    'leak': 'rgba(239, 68, 68, 0.1)',
+                    'warning': 'rgba(245, 158, 11, 0.1)',
+                    'success': 'rgba(34, 197, 94, 0.1)'
+                };
+                
+                const borderMap = {
+                    'leak': 'rgba(239, 68, 68, 0.3)',
+                    'warning': 'rgba(245, 158, 11, 0.3)',
+                    'success': 'rgba(34, 197, 94, 0.3)'
+                };
+                
+                const iconPath = alert.type === 'leak' ? 
+                    'M12 9v4m0 4h.01' :
+                    alert.type === 'warning' ?
+                    'M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM12 8.25a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z' :
+                    'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z';
+                
+                return `
+                    <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: ${bgMap[alert.type]}; border: 1px solid ${borderMap[alert.type]}; border-radius: 8px; margin-bottom: 1rem; direction: rtl;">
+                        <svg style="width: 24px; height: 24px; fill: ${colorMap[alert.type]}; flex-shrink: 0;" viewBox="0 0 24 24">
+                            <path d="${iconPath}"/>
+                        </svg>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem; font-family: 'Cairo'; color: ${colorMap[alert.type]};">${alert.month}: ${alert.message}</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8; font-family: 'Cairo'; color: rgba(255,255,255,0.8);">${alert.suggestion}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
-        function createDataCharts() {
-            // Impact Chart
-            const impactData = [{
-                x: ['Household', 'Agricultural', 'Industrial', 'Municipal'],
-                y: [25, 45, 60, 35],
-                type: 'bar',
-                marker: {
-                    color: ['#22c55e', '#16a34a', '#15803d', '#166534']
-                },
-                name: 'Conservation Potential (%)'
-            }];
-
-            const impactLayout = {
-                title: {
-                    text: 'Water Conservation Potential by Sector',
-                    font: { color: 'rgba(255,255,255,0.9)' }
-                },
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                xaxis: { 
-                    color: 'rgba(255,255,255,0.7)',
-                    gridcolor: 'rgba(255,255,255,0.1)'
-                },
-                yaxis: { 
-                    color: 'rgba(255,255,255,0.7)',
-                    gridcolor: 'rgba(255,255,255,0.1)',
-                    title: 'Savings Potential (%)'
-                }
+        function calculatePoints() {
+            const { alerts, avgUsage, extractedData } = billAnalysisResults;
+            let points = 0;
+            let breakdown = {
+                savings: 0,
+                consistency: 0,
+                leakDetection: 0
             };
-
-            Plotly.newPlot('impactChart', impactData, impactLayout, {
-                displayModeBar: false,
-                responsive: true
-            });
-
-            // Usage Patterns Chart
-            const usageData = [{
-                x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                y: [85, 78, 72, 88, 95, 102, 108, 105, 98, 90, 82, 80],
-                type: 'scatter',
-                mode: 'lines+markers',
-                line: { color: '#06b6d4', width: 3 },
-                marker: { color: '#06b6d4', size: 8 },
-                name: 'Water Usage Index'
-            }];
-
-            const usageLayout = {
-                title: {
-                    text: 'Regional Water Usage Patterns (2024)',
-                    font: { color: 'rgba(255,255,255,0.9)' }
-                },
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                xaxis: { 
-                    color: 'rgba(255,255,255,0.7)',
-                    gridcolor: 'rgba(255,255,255,0.1)'
-                },
-                yaxis: { 
-                    color: 'rgba(255,255,255,0.7)',
-                    gridcolor: 'rgba(255,255,255,0.1)',
-                    title: 'Usage Index'
-                }
-            };
-
-            Plotly.newPlot('usageChart', usageData, usageLayout, {
-                displayModeBar: false,
-                responsive: true
-            });
-
-            // Effectiveness Chart
-            const effectivenessData = [{
-                labels: ['Leak Repair', 'Efficient Appliances', 'Behavioral Changes', 'Rainwater Harvesting', 'Greywater Reuse'],
-                values: [35, 25, 15, 15, 10],
-                type: 'pie',
-                marker: {
-                    colors: ['#22c55e', '#16a34a', '#15803d', '#166534', '#14532d']
-                },
-                hovertemplate: '<b>%{label}</b><br>Effectiveness: %{value}%<extra></extra>'
-            }];
-
-            const effectivenessLayout = {
-                title: {
-                    text: 'Conservation Method Effectiveness',
-                    font: { color: 'rgba(255,255,255,0.9)' }
-                },
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                font: { color: 'rgba(255,255,255,0.7)' },
-                showlegend: true,
-                legend: {
-                    font: { color: 'rgba(255,255,255,0.7)' }
-                }
-            };
-
-            Plotly.newPlot('effectivenessChart', effectivenessData, effectivenessLayout, {
-                displayModeBar: false,
-                responsive: true
-            });
+            
+            const baselineUsage = 15000;
+            if (avgUsage < baselineUsage) {
+                const savingsPercentage = (baselineUsage - avgUsage) / baselineUsage;
+                breakdown.savings = Math.round(savingsPercentage * 200);
+            }
+            
+            if (extractedData.length >= 3) {
+                const usages = extractedData.map(item => item.usage);
+                const isConsistent = checkConsistency(usages);
+                if (isConsistent) breakdown.consistency = 50;
+            }
+            
+            const leakAlerts = alerts.filter(alert => alert.type === 'leak');
+            if (leakAlerts.length > 0) {
+                breakdown.leakDetection = 30;
+            }
+            
+            const improvementAlerts = alerts.filter(alert => alert.type === 'success');
+            if (improvementAlerts.length > 0) {
+                breakdown.savings += 100;
+            }
+            
+            points = breakdown.savings + breakdown.consistency + breakdown.leakDetection;
+            userPoints += points;
+            
+            updatePointsDisplay(breakdown);
+            checkAchievements();
         }
 
-        // Update data periodically
-        setInterval(loadRealTimeData, 300000); // Every 5 minutes
+        function checkConsistency(usages) {
+            const avg = usages.reduce((a, b) => a + b, 0) / usages.length;
+            return usages.every(usage => Math.abs(usage - avg) / avg < 0.2);
+        }
 
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', function() {
-            console.log('Water Conservation Guide session ended');
-        });
+        function updatePointsDisplay(breakdown) {
+            document.getElementById('currentPoints').textContent = userPoints;
+            document.getElementById('savingsPoints').textContent = `+${breakdown.savings}`;
+            document.getElementById('consistencyPoints').textContent = `+${breakdown.consistency}`;
+            document.getElementById('leakDetectionPoints').textContent = `+${breakdown.leakDetection}`;
+            
+            updateAvailableRewards();
+        }
+
+        function checkAchievements() {
+            const achievements = document.querySelectorAll('.achievement');
+            
+            if (billAnalysisResults.avgUsage < 14000) {
+                unlockAchievement(achievements[0]);
+            }
+            
+            if (billAnalysisResults.extractedData.length >= 3 && checkConsistency(billAnalysisResults.extractedData.map(item => item.usage))) {
+                unlockAchievement(achievements[1]);
+            }
+            
+            if (billAnalysisResults.alerts.some(alert => alert.type === 'leak')) {
+                unlockAchievement(achievements[2]);
+            }
+        }
+
+        function unlockAchievement(achievementElement) {
+            achievementElement.classList.remove('locked');
+            achievementElement.classList.add('unlocked');
+            
+            achievementElement.style.animation = 'pulse 2s';
+            setTimeout(() => {
+                achievementElement.style.animation = '';
+            }, 2000);
+        }
+
+        function updateAvailableRewards() {
+            const redeemButtons = document.querySelectorAll('.redeem-btn');
+            
+            if (userPoints >= 500) {
+                redeemButtons[0].disabled = false;
+                redeemButtons[0].style.opacity = '1';
+            }
+            
+            if (userPoints >= 200) {
+                redeemButtons[1].disabled = false;
+                redeemButtons[1].style.opacity = '1';
+            }
+            
+            if (userPoints >= 1000) {
+                redeemButtons[2].disabled = false;
+                redeemButtons[2].style.opacity = '1';
+            }
+        }
+
+        function redeemReward(rewardType, cost) {
+            if (userPoints < cost) {
+                showNotification('عذراً، لا تملك نقاط كافية لاستبدال هذه المكافأة', 'error');
+                return;
+            }
+
+            userPoints -= cost;
+            document.getElementById('currentPoints').textContent = userPoints;
+            
+            let rewardMessage = '';
+            switch(rewardType) {
+                case 'discount':
+                    rewardMessage = 'تم استبدال خصم 10% على فاتورة المياه! سيتم تطبيق الخصم في الفاتورة القادمة.';
+                    break;
+                case 'certificate':
+                    rewardMessage = 'تم إنشاء شهادة التقدير الإلكترونية! ستصلك عبر البريد الإلكتروني.';
+                    break;
+                case 'tools':
+                    rewardMessage = 'تم طلب أدوات توفير المياه! سيتم التواصل معك لتنسيق التسليم.';
+                    break;
+            }
+            
+            showNotification(rewardMessage, 'success');
+            updateAvailableRewards();
+        }
+
+        function showNotification(message, type = 'success') {
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+        function calculateWaterSavingsAr() {
+    // جمع البيانات المدخلة
+    const householdSize = parseInt(document.getElementById('householdSizeAr').value) || 4;
+    const housingType = document.getElementById('housingTypeAr').value;
+    const bathrooms = parseInt(document.getElementById('bathroomsAr').value) || 2;
+    const hasWashingMachine = document.getElementById('hasWashingMachineAr').checked;
+    const hasDishwasher = document.getElementById('hasDishwasherAr').checked;
+    const currentUsageInput = document.getElementById('currentUsageAr').value;
+    const currentUsage = currentUsageInput ? parseInt(currentUsageInput) : null;
+    
+    // معدلات الاستهلاك اليومي للشخص الواحد (باللتر)
+    const perPersonUsage = {
+        shower: 70,        // الاستحمام والنظافة الشخصية
+        toilet: 50,        // دورات المياه
+        cooking: 25,       // الطبخ والشرب
+        cleaning: 20       // التنظيف العام
+    };
+    
+    // حساب الاستهلاك اليومي الأساسي
+    let dailyShower = perPersonUsage.shower * householdSize;
+    let dailyToilet = perPersonUsage.toilet * householdSize;
+    let dailyCooking = perPersonUsage.cooking * householdSize;
+    let dailyCleaning = perPersonUsage.cleaning * householdSize;
+    
+    // إضافة استهلاك الأجهزة
+    if (hasWashingMachine) {
+        // غسالة ملابس: ~100 لتر × 3 مرات أسبوعياً ÷ 7 أيام
+        dailyCleaning += (100 * 3) / 7;
+    }
+    
+    if (hasDishwasher) {
+        // غسالة أطباق: ~40 لتر × 5 مرات أسبوعياً ÷ 7 أيام
+        dailyCleaning += (40 * 5) / 7;
+    }
+    
+    // تعديل حسب نوع المسكن
+    let housingMultiplier = 1;
+    if (housingType === 'villa') {
+        housingMultiplier = 1.15;  // فيلا: 15% زيادة
+    } else if (housingType === 'villa_garden') {
+        housingMultiplier = 1.35;  // فيلا بحديقة: 35% زيادة (للري)
+        dailyCleaning += 200;  // إضافة 200 لتر يومياً للحديقة
+    }
+    
+    // حساب الإجمالي اليومي
+    let totalDaily = (dailyShower + dailyToilet + dailyCooking + dailyCleaning) * housingMultiplier;
+    totalDaily = Math.round(totalDaily);
+    
+    // الاستهلاك الشهري المتوقع
+    const monthlyExpected = Math.round(totalDaily * 30);
+    
+    // حساب حجم الخزان الموصى به (2.5-3 أيام من الاستهلاك)
+    const tankSize = Math.round((totalDaily * 2.5) / 500) * 500; // تقريب لأقرب 500 لتر
+    
+    // التكلفة الشهرية المتوقعة (متوسط 0.03 جنيه/لتر)
+    const monthlyCost = Math.round(monthlyExpected * 0.03);
+    
+    // تحديث النتائج الرئيسية
+    document.getElementById('dailyUsageAr').textContent = totalDaily.toLocaleString('ar-EG') + ' لتر';
+    document.getElementById('monthlyUsageAr').textContent = monthlyExpected.toLocaleString('ar-EG') + ' لتر';
+    document.getElementById('tankSizeAr').textContent = tankSize.toLocaleString('ar-EG') + ' لتر';
+    document.getElementById('monthlyCostAr').textContent = monthlyCost.toLocaleString('ar-EG') + ' جنيه';
+    
+    // تحديث تفصيل الاستهلاك
+    document.getElementById('showerUsageAr').textContent = Math.round(dailyShower).toLocaleString('ar-EG') + ' لتر';
+    document.getElementById('toiletUsageAr').textContent = Math.round(dailyToilet).toLocaleString('ar-EG') + ' لتر';
+    document.getElementById('cookingUsageAr').textContent = Math.round(dailyCooking).toLocaleString('ar-EG') + ' لتر';
+    document.getElementById('cleaningUsageAr').textContent = Math.round(dailyCleaning).toLocaleString('ar-EG') + ' لتر';
+    
+    // مقارنة مع الاستهلاك الحالي إذا تم إدخاله
+    const comparisonRow = document.getElementById('comparisonRow');
+    const usageAlert = document.getElementById('usageAlertAr');
+    
+    if (currentUsage && currentUsage > 0) {
+        comparisonRow.style.display = 'flex';
+        usageAlert.style.display = 'block';
+        
+        const difference = currentUsage - monthlyExpected;
+        const differencePercent = Math.round((difference / monthlyExpected) * 100);
+        
+        const statusElement = document.getElementById('usageStatusAr');
+        const alertTitle = usageAlert.querySelector('h4');
+        const alertText = usageAlert.querySelector('p');
+        
+        if (differencePercent > 30) {
+            // استهلاك مرتفع جداً - تحذير
+            statusElement.innerHTML = 'مرتفع جداً <svg style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+            statusElement.style.color = '#ef4444';
+            usageAlert.style.background = 'rgba(239, 68, 68, 0.1)';
+            usageAlert.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+            alertTitle.style.color = '#ef4444';
+            alertTitle.innerHTML = '<svg style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-left: 8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> تحذير: استهلاك مرتفع جداً!';
+            alertText.style.color = 'rgba(255,255,255,0.9)';
+            alertText.textContent = `استهلاكك الحالي (${currentUsage.toLocaleString('ar-EG')} لتر) أعلى بنسبة ${Math.abs(differencePercent)}% من المعدل الطبيعي. قد يكون هناك تسريب في الأنابيب أو استهلاك مسرف. ننصح بفحص المواسير والصنابير فوراً ومراجعة عادات الاستهلاك.`;
+            
+        } else if (differencePercent > 15) {
+            // استهلاك أعلى من الطبيعي - تنبيه
+            statusElement.innerHTML = 'أعلى من الطبيعي <svg style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>';
+            statusElement.style.color = '#f59e0b';
+            usageAlert.style.background = 'rgba(245, 158, 11, 0.1)';
+            usageAlert.style.borderColor = 'rgba(245, 158, 11, 0.3)';
+            alertTitle.style.color = '#f59e0b';
+            alertTitle.innerHTML = '<svg style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-left: 8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> ملاحظة: استهلاك أعلى قليلاً من المتوقع';
+            alertText.style.color = 'rgba(255,255,255,0.9)';
+            alertText.textContent = `استهلاكك الحالي أعلى بنسبة ${Math.abs(differencePercent)}% من المعدل الطبيعي لأسرة بحجمك. يمكنك توفير حوالي ${Math.abs(difference).toLocaleString('ar-EG')} لتر شهرياً من خلال تطبيق إرشادات التوفير أدناه.`;
+            
+        } else if (differencePercent < -10) {
+            // استهلاك ممتاز - توفير كبير
+            statusElement.innerHTML = 'ممتاز! <svg style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+            statusElement.style.color = '#22c55e';
+            usageAlert.style.background = 'rgba(34, 197, 94, 0.1)';
+            usageAlert.style.borderColor = 'rgba(34, 197, 94, 0.3)';
+            alertTitle.style.color = '#22c55e';
+            alertTitle.innerHTML = '<svg style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-left: 8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> مبروك! استهلاك ممتاز';
+            alertText.style.color = 'rgba(255,255,255,0.9)';
+            alertText.textContent = `استهلاكك أقل بنسبة ${Math.abs(differencePercent)}% من المعدل الطبيعي! أنت توفر حوالي ${Math.abs(difference).toLocaleString('ar-EG')} لتر شهرياً. استمر في هذا الأداء الرائع والتزامك بالحفاظ على المياه!`;
+            
+        } else {
+            // استهلاك طبيعي
+            statusElement.innerHTML = 'طبيعي <svg style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+            statusElement.style.color = '#22c55e';
+            usageAlert.style.background = 'rgba(34, 197, 94, 0.1)';
+            usageAlert.style.borderColor = 'rgba(34, 197, 94, 0.3)';
+            alertTitle.style.color = '#22c55e';
+            alertTitle.innerHTML = '<svg style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-left: 8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> استهلاك ضمن المعدل الطبيعي';
+            alertText.style.color = 'rgba(255,255,255,0.9)';
+            alertText.textContent = `استهلاكك الحالي (${currentUsage.toLocaleString('ar-EG')} لتر) ضمن المعدل الطبيعي لأسرة بحجمك. حافظ على هذا المستوى وطبق النصائح أدناه لمزيد من التوفير.`;
+        }
+    } else {
+        // إخفاء المقارنة إذا لم يتم إدخال الاستهلاك الحالي
+        comparisonRow.style.display = 'none';
+        usageAlert.style.display = 'none';
+    }
+    
+    // تأثير بصري
+    const resultsPanel = document.querySelector('.results-panel');
+    if (resultsPanel) {
+        resultsPanel.style.animation = 'none';
+        setTimeout(() => {
+            resultsPanel.style.animation = 'pulse 0.5s';
+        }, 10);
+    }
+}
+
+// حساب أولي عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('householdSizeAr')) {
+        calculateWaterSavingsAr();
+    }
+});
+
+// حساب أولي عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('householdSizeAr')) {
+        calculateWaterSavingsAr();
+    }
+});
     </script>
 </body>
 </html>
